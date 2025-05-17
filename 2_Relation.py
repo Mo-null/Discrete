@@ -1,7 +1,5 @@
 class RELATION:
     def __init__(self, matrix):
-        if not all(len(row) == len(matrix) for row in matrix):
-            raise ValueError("Matrix must be square")
         self.matrix = matrix
         self.size = len(matrix)
 
@@ -43,26 +41,43 @@ class RELATION:
 
 
 def main():
-    print("Enter square relation matrix (one row per line, 0s and 1s):")
-    rows = []
+    print("=== Relation Matrix Analyzer ===")
+    
     while True:
-        row_input = input(f"Row {len(rows)+1}: ").strip()
-        if not row_input and len(rows) > 0:
-            break
         try:
-            row = list(map(int, row_input.split()))
-            if not all(x in (0,1) for x in row):
-                print("Error: Only 0s and 1s allowed")
+            n = int(input("Enter matrix size (n for nxn): ").strip())
+            if n <= 0:
+                print("Error: Size must be ≥1")
                 continue
-            rows.append(row)
+            break
         except ValueError:
-            print("Error: Use space-separated integers")
+            print("Error: Enter an integer")
 
-    try:
-        rel = RELATION(rows)
-        print("\nClassification:", rel.classify())
-    except ValueError as e:
-        print("Error:", e)
+    print(f"\nEnter {n} rows, each with {n} space-separated 0s and 1s:")
+    rows = []
+    for i in range(n):
+        while True:
+            row_input = input(f"Row {i+1}: ").strip()
+            try:
+                row = list(map(int, row_input.split()))
+                if len(row) != n:
+                    print(f"Error: Exactly {n} values required")
+                    continue
+                if not all(x in (0, 1) for x in row):
+                    print("Error: Only 0s and 1s allowed")
+                    continue
+                rows.append(row)
+                break
+            except ValueError:
+                print("Error: Use integers separated by spaces")
+
+    rel = RELATION(rows)
+    print("\n=== Analysis ===")
+    print(f"Reflexive: {rel.is_reflexive()}")
+    print(f"Symmetric: {rel.is_symmetric()}")
+    print(f"Antisymmetric: {rel.is_antisymmetric()}")
+    print(f"Transitive: {rel.is_transitive()}")
+    print(f"\nClassification: {rel.classify()}")
 
 
 if __name__ == "__main__":
