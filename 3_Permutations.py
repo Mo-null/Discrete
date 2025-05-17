@@ -15,20 +15,17 @@ def display_permutations(perms, repetition_mode):
     print(f"Total permutations: {len(perms)}")
     print("All permutations:")
     for i, perm in enumerate(perms, 1):
-        print(f"{i}. {perm}")  # Now showing as tuples
+        print(f"{i}. {perm}")  # Showing as tuples
 
 def main():
     print("Permutation Generator")
-    print("Note: Enter 'y' for permutations WITH repetition (items can repeat)")
-    print("      Enter 'n' for permutations WITHOUT repetition (all items unique)\n")
-    
     try:
         elements = input("Enter elements separated by spaces: ").split()
         if not elements:
             raise ValueError("No elements entered")
         
         length = int(input("Enter length of permutations: "))
-        repetition = input("Allow repetition? (y/n): ").strip().lower() == 'y'
+        repetition = input("Allow repetition? (y=with repetition/n=without): ").strip().lower() == 'y'
 
         perms = generate_permutations(elements, repetition, length)
         display_permutations(perms, repetition)
