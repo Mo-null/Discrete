@@ -9,13 +9,19 @@ def generate_permutations(elements, allow_repetition=False, length=None):
         raise ValueError("Length cannot exceed number of unique elements when repetition=False")
     return list(product(elements, repeat=length)) if allow_repetition else list(permutations(elements, length))
 
-def display_permutations(perms):
-    print(f"\nTotal permutations: {len(perms)}")
+def display_permutations(perms, repetition_mode):
+    mode = "WITH" if repetition_mode else "WITHOUT"
+    print(f"\nGenerating permutations {mode} repetition")
+    print(f"Total permutations: {len(perms)}")
+    print("All permutations:")
     for i, perm in enumerate(perms, 1):
-        print(f"{i}. {''.join(perm)}")
+        print(f"{i}. {perm}")  # Now showing as tuples
 
 def main():
     print("Permutation Generator")
+    print("Note: Enter 'y' for permutations WITH repetition (items can repeat)")
+    print("      Enter 'n' for permutations WITHOUT repetition (all items unique)\n")
+    
     try:
         elements = input("Enter elements separated by spaces: ").split()
         if not elements:
@@ -25,7 +31,7 @@ def main():
         repetition = input("Allow repetition? (y/n): ").strip().lower() == 'y'
 
         perms = generate_permutations(elements, repetition, length)
-        display_permutations(perms)
+        display_permutations(perms, repetition)
     except ValueError as e:
         print(f"Error: {e}")
 
