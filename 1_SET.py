@@ -28,8 +28,9 @@ class SET:
             'symmetric_difference': sorted(list(self.elements.symmetric_difference(set2.elements)))
         }
 
-    def complement(self, set2):
-        return sorted(list(self.elements - set2.elements))
+    def complement(self, universal_set):
+        """Returns Universal Set - Current Set (true complement)."""
+        return sorted(list(universal_set.elements - self.elements))
 
     def cartesian_product(self, set2):
         return sorted([(x, y) for x in sorted(self.elements) for y in sorted(set2.elements)])
@@ -49,8 +50,8 @@ def main():
     print("2. Generate power set")
     print("3. Check if subset")
     print("4. Union and intersection")
-    print("5. Set complement (A - B)")
-    print("6. Difference operations")
+    print("5. Complement (Universal Set - A)")
+    print("6. Difference operations (A - B and symmetric difference)")
     print("7. Cartesian product")
     print("8. Exit")
 
@@ -78,9 +79,10 @@ def main():
             print(f"Union: {union}\nIntersection: {intersection}")
 
         elif choice == '5':
+            print("(First define the Universal Set)")
+            U = SET(input_set())
             A = SET(input_set())
-            B = SET(input_set())
-            print("Complement:", A.complement(B))
+            print("Complement (Universal Set - A):", A.complement(U))
 
         elif choice == '6':
             A = SET(input_set())
@@ -101,7 +103,7 @@ def main():
         else:
             print("Invalid choice! Please enter 1-8.")
 
-        input("\nPress Enter to return to menu...")
+        input("\nPress Enter to continue...")
 
 if __name__ == "__main__":
     main()
