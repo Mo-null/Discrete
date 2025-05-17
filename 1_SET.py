@@ -44,16 +44,18 @@ def input_set():
             print("Invalid input! Please enter numbers only.")
 
 def main():
+    print("\n=== SET OPERATIONS ===")
+    print("1. Check if element is in set")
+    print("2. Generate power set")
+    print("3. Check if subset")
+    print("4. Union and intersection")
+    print("5. Set complement (A - B)")
+    print("6. Difference operations")
+    print("7. Cartesian product")
+    print("8. Exit")
+
     while True:
-        print("\n1. Check element")
-        print("2. Generate power set") 
-        print("3. Check subset")
-        print("4. Union and intersection")
-        print("5. Complement")
-        print("6. Difference operations")
-        print("7. Cartesian product")
-        print("8. Exit")
-        choice = input("Choose operation (1-8): ").strip()
+        choice = input("\nChoose operation (1-8): ").strip()
 
         if choice == '1':
             s = SET(input_set())
@@ -98,6 +100,8 @@ def main():
 
         else:
             print("Invalid choice! Please enter 1-8.")
+
+        input("\nPress Enter to return to menu...")
 
 if __name__ == "__main__":
     main()
