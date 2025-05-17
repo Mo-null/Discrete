@@ -1,7 +1,7 @@
 class RELATION:
     def __init__(self, matrix):
-        if len(matrix) != len(matrix[0]):
-            raise ValueError("Matrix must be square.")
+        if not all(len(row) == len(matrix) for row in matrix):
+            raise ValueError("Matrix must be square")
         self.matrix = matrix
         self.size = len(matrix)
 
@@ -35,31 +35,31 @@ class RELATION:
         return True
 
     def classify(self):
-        is_equiv = self.is_reflexive() and self.is_symmetric() and self.is_transitive()
-        is_partial_order = self.is_reflexive() and self.is_antisymmetric() and self.is_transitive()
-        
-        if is_equiv:
+        if self.is_reflexive() and self.is_symmetric() and self.is_transitive():
             return "Equivalence Relation"
-        elif is_partial_order:
+        elif self.is_reflexive() and self.is_antisymmetric() and self.is_transitive():
             return "Partial Order Relation"
         return "None"
 
 
 def main():
-    print("Enter the relation matrix (space-separated rows, e.g., '1 0 1' for a row):")
+    print("Enter square relation matrix (one row per line, 0s and 1s):")
     rows = []
     while True:
-        row_input = input(f"Row {len(rows) + 1} (or press Enter to finish): ").strip()
-        if not row_input:
+        row_input = input(f"Row {len(rows)+1}: ").strip()
+        if not row_input and len(rows) > 0:
             break
-        row = list(map(int, row_input.split()))
-        rows.append(row)
-    
+        try:
+            row = list(map(int, row_input.split()))
+            if not all(x in (0,1) for x in row):
+                print("Error: Only 0s and 1s allowed")
+                continue
+            rows.append(row)
+        except ValueError:
+            print("Error: Use space-separated integers")
+
     try:
         rel = RELATION(rows)
-        print("\nRelation Matrix:")
-        for row in rel.matrix:
-            print(" ".join(map(str, row)))
         print("\nClassification:", rel.classify())
     except ValueError as e:
         print("Error:", e)
