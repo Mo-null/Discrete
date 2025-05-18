@@ -1,15 +1,17 @@
 def compute_degrees(adj_list):
-    in_degree = {}
-    out_degree = {v: len(neighbors) for v, neighbors in adj_list.items()}
+    """Compute in-degree and out-degree for each vertex in a directed graph"""
+    vertices = set(adj_list.keys()).union(*adj_list.values())
+    in_degree = {v: 0 for v in vertices}
+    out_degree = {v: len(adj_list.get(v, [])) for v in vertices}
     
     for v in adj_list:
-        in_degree[v] = in_degree.get(v, 0)
         for neighbor in adj_list[v]:
-            in_degree[neighbor] = in_degree.get(neighbor, 0) + 1
+            in_degree[neighbor] += 1
             
     return in_degree, out_degree
 
 def input_directed_graph():
+    """Input directed graph edges with validation"""
     adj_list = {}
     print("Enter edges as 'from to' (e.g., 'A B'). Empty line to finish:")
     
@@ -42,8 +44,8 @@ def main():
     
     print("\nVertex | In-Degree | Out-Degree")
     print("-------------------------------")
-    for v in sorted(set(adj_list.keys()).union(*adj_list.values())):
-        print(f"{v:6} | {in_degree.get(v, 0):9} | {out_degree.get(v, 0):10}")
+    for v in sorted(in_degree.keys()):  # Safe to use direct dict access now
+        print(f"{v:6} | {in_degree[v]:9} | {out_degree[v]:10}")
 
 if __name__ == "__main__":
     main()
