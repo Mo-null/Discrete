@@ -1,18 +1,17 @@
 def is_complete_graph(adj_matrix):
+    """Check if the adjacency matrix represents a complete graph."""
     n = len(adj_matrix)
-    if n < 2:
+    if n == 0:
+        print("Empty graph is trivially complete.")
         return True
     for i in range(n):
         for j in range(n):
-            if i == j:
-                if adj_matrix[i][j] != 0:
-                    return False
-            else:
-                if adj_matrix[i][j] != 1:
-                    return False
+            if adj_matrix[i][j] != (0 if i == j else 1):
+                return False
     return True
 
 def input_adjacency_matrix(n):
+    """Input an n x n adjacency matrix with 0/1 entries."""
     matrix = []
     print(f"Enter the {n}x{n} adjacency matrix (one row per line, space-separated):")
     for i in range(n):
@@ -27,6 +26,9 @@ def input_adjacency_matrix(n):
                 continue
             try:
                 row = [int(x) for x in elements]
+                if any(x not in {0, 1} for x in row):
+                    print("Error: Matrix entries must be 0 or 1. Try again.")
+                    continue
                 matrix.append(row)
                 break
             except ValueError:
@@ -48,10 +50,12 @@ def main():
             break
         except ValueError:
             print("Error: Please enter an integer.")
+    
     adj_matrix = input_adjacency_matrix(n)
     print("\nAdjacency Matrix:")
     for row in adj_matrix:
         print(" ".join(map(str, row)))
+    
     if is_complete_graph(adj_matrix):
         print("\nResult: The graph is COMPLETE.")
     else:
