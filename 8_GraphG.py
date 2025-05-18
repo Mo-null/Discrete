@@ -1,5 +1,4 @@
 def compute_degrees(adj_list):
-    """Compute in-degree and out-degree for each vertex in a directed graph"""
     vertices = set(adj_list.keys()).union(*adj_list.values())
     in_degree = {v: 0 for v in vertices}
     out_degree = {v: len(adj_list.get(v, [])) for v in vertices}
@@ -11,7 +10,6 @@ def compute_degrees(adj_list):
     return in_degree, out_degree
 
 def input_directed_graph():
-    """Input directed graph edges with validation"""
     adj_list = {}
     print("Enter edges as 'from to' (e.g., 'A B'). Empty line to finish:")
     
