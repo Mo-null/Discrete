@@ -1,6 +1,6 @@
 class SET:
     def __init__(self, elements):
-        self.elements = elements
+        self.elements = set(elements)
 
     def is_member(self, element):
         return element in self.elements
